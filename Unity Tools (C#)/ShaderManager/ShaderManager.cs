@@ -225,7 +225,7 @@ public class ShaderManager : ScriptableObject
 	{
 		int generatorColumns = togglesCount;
 		var combinations = Mathf.Pow(2, generatorColumns);
-		int generatorRows = (int)combinations / togglesCount + 1;
+		int generatorRows = togglesCount > 0 ? (int)combinations / togglesCount + 1 : 1;
 		int generatorIncrement = 0;
 		Vector3 parentsGeneratorPosition;
 		Vector3 spheresGeneratorPosition;
@@ -237,7 +237,12 @@ public class ShaderManager : ScriptableObject
 		for (int row = 0; row < generatorRows; row++)
 		{
 			if (row == generatorRows - 1)
-				generatorColumns = (int)combinations % togglesCount;
+			{
+				if (row > 0)
+					generatorColumns = (int)combinations % togglesCount;
+				else
+					generatorColumns = 1;
+			}
 
 			for (int col = 0; col < generatorColumns; col++)
 			{
