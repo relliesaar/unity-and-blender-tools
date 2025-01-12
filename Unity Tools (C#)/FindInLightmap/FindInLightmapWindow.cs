@@ -15,20 +15,23 @@ public class FindInLightmapWindow : EditorWindow
 	void OnEnable()
 	{
 		EditorSceneManager.activeSceneChangedInEditMode += RefreshLightmapsIndexesOnChangingScene;
-
-		FindInLightmap.instance = CreateInstance<FindInLightmap>();
-		FindInLightmap.instance.PrepareLightmapParamsField();
-		FindInLightmap.instance.PrepareLightmapPopupField();
-		FindInLightmap.instance.PrepareObjectsList();
+		PrepareLightmapData();
 	}
 	void OnDisable()
 	{
 		EditorSceneManager.activeSceneChangedInEditMode -= RefreshLightmapsIndexesOnChangingScene;
 	}
+
+	static void PrepareLightmapData()
+	{
+		FindInLightmap.instance = CreateInstance<FindInLightmap>();
+		FindInLightmap.instance.PrepareLightmapParamsField();
+		FindInLightmap.instance.PrepareLightmapPopupField();
+		FindInLightmap.instance.PrepareObjectsList();
+	}
 	static void RefreshLightmapsIndexesOnChangingScene(Scene previousScene, Scene currentScene)
 	{
-		// only because i don't need to use previous and current scenes in OnEnable() method
-		FindInLightmap.instance.PrepareLightmapPopupField();
+		PrepareLightmapData();
 	}
 	void OnGUI()
 	{
@@ -36,7 +39,7 @@ public class FindInLightmapWindow : EditorWindow
 
 		EditorGUILayout.Space();
 
-		FindInLightmap.instance.selectedLightmapIndex = EditorGUILayout.IntPopup("Lightmap index: ", 
+			FindInLightmap.instance.selectedLightmapIndex = EditorGUILayout.IntPopup("Lightmap index: ", 
 			FindInLightmap.instance.selectedLightmapIndex,
 			FindInLightmap.instance.lightmapNames.ToArray(), 
 			FindInLightmap.instance.lightmapIndexes.ToArray());
@@ -49,7 +52,7 @@ public class FindInLightmapWindow : EditorWindow
 		EditorGUILayout.Space();
 
 		FindInLightmap.instance.additionalParams = EditorGUILayout.Toggle("Additional search params",
-			FindInLightmap.instance.additionalParams);
+		FindInLightmap.instance.additionalParams);
 
 		if (FindInLightmap.instance.additionalParams)
 		{

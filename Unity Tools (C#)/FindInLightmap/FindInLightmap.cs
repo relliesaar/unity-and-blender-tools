@@ -47,7 +47,7 @@ public class FindInLightmap : ScriptableObject
     }
     public void PrepareLightmapParamsField()
     {
-        lightmapPresetsData = AssetDatabase.LoadAssetAtPath<LightmapPresetsData>("Assets/_Scripts/Editor/LD_Tools/FindInLightmap/LightmapPresetsData.asset");
+        lightmapPresetsData = AssetDatabase.LoadAssetAtPath<LightmapPresetsData>("Assets/LightmapPresetsData.asset");
 
         lightmapParamsNames = new List<string>();
         lightmapParamsIndexes = new List<int>();
